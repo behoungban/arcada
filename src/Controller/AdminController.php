@@ -15,6 +15,14 @@ class AdminController extends AbstractController
             'controller_name' => 'AdminController',
         ]);
     }
+
+    #[Route('/admin/manage-users', name: 'admin_manage_users')]
+    public function manageUsers(): Response
+    {
+        return $this->render('admin/manage_users.html.twig', [
+            'controller_name' => 'AdminController',
+        ]);
+    }
 }
 
 // src/Controller/EmployeeController.php
@@ -33,6 +41,14 @@ class EmployeeController extends AbstractController
             'controller_name' => 'EmployeeController',
         ]);
     }
+
+    #[Route('/employee/manage-reviews', name: 'employee_manage_reviews')]
+    public function manageReviews(): Response
+    {
+        return $this->render('employee/manage_reviews.html.twig', [
+            'controller_name' => 'EmployeeController',
+        ]);
+    }
 }
 
 // src/Controller/VetController.php
@@ -48,6 +64,14 @@ class VetController extends AbstractController
     public function index(): Response
     {
         return $this->render('vet/home.html.twig', [
+            'controller_name' => 'VetController',
+        ]);
+    }
+
+    #[Route('/vet/manage-appointments', name: 'vet_manage_appointments')]
+    public function manageAppointments(): Response
+    {
+        return $this->render('vet/manage_appointments.html.twig', [
             'controller_name' => 'VetController',
         ]);
     }

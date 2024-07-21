@@ -1,22 +1,29 @@
 <?php
 
-namespace App\Document;
+// src/Entity/Consultation.php
+namespace App\Entity;
 
-use Doctrine\ODM\MongoDB\Mapping\Annotations as MongoDB;
+use App\Repository\ConsultationRepository;
+use Doctrine\ORM\Mapping as ORM;
 
-#[MongoDB\Document]
+#[ORM\Entity(repositoryClass: ConsultationRepository::class)]
 class Consultation
 {
-    #[MongoDB\Id]
-    private ?string $id = null;
+    #[ORM\Id]
+    #[ORM\GeneratedValue]
+    #[ORM\Column(type: 'integer')]
+    private $id;
 
-    #[MongoDB\Field(type: "string")]
-    private ?string $animalName = null;
+    #[ORM\Column(type: 'string', length: 255)]
+    private $animalName;
 
-    #[MongoDB\Field(type: "int")]
-    private ?int $viewCount = 0;
+    #[ORM\Column(type: 'integer')]
+    private $viewCount = 0;
 
-    public function getId(): ?string
+    #[ORM\Column(type: 'text', nullable: true)]
+    private $details;
+
+    public function getId(): ?int
     {
         return $this->id;
     }
@@ -26,7 +33,7 @@ class Consultation
         return $this->animalName;
     }
 
-    public function setAnimalName(string $animalName): static
+    public function setAnimalName(string $animalName): self
     {
         $this->animalName = $animalName;
 
@@ -38,14 +45,26 @@ class Consultation
         return $this->viewCount;
     }
 
-    public function setViewCount(int $viewCount): static
+    public function setViewCount(int $viewCount): self
     {
         $this->viewCount = $viewCount;
 
         return $this;
     }
 
-    public function incrementViewCount(): static
+    public function getDetails(): ?string
+    {
+        return $this->details;
+    }
+
+    public function setDetails(?string $details): self
+    {
+        $this->details = $details;
+
+        return $this;
+    }
+
+    public function incrementViewCount(): self
     {
         $this->viewCount++;
 

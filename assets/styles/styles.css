@@ -1,13 +1,14 @@
-/* public/css/styles.css */
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap');
+
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Plus Jakarta Sans', sans-serif;
     margin: 0;
     padding: 0;
     background-color: #f4f4f9;
 }
 
 header {
-    background-color: #2c3e50;
+    background: linear-gradient(to right, #E4E1D0, #D8D4C4);
     padding: 20px 0;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
@@ -26,7 +27,8 @@ header nav a.logo {
 }
 
 header nav a.logo img {
-    height: 50px;
+    width: 60px;
+    height: 60px;
 }
 
 header nav ul {
@@ -42,7 +44,7 @@ header nav ul li {
 
 header nav ul li a {
     text-decoration: none;
-    color: #ecf0f1;
+    color: #2c3e50;
     font-weight: bold;
 }
 
@@ -50,54 +52,62 @@ header nav ul li a:hover {
     color: #3498db;
 }
 
-.container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-}
-
 .presentation {
     display: flex;
     align-items: center;
-    margin-bottom: 40px;
-}
-
-.presentation img {
-    width: 50%;
-    height: auto;
-    margin-right: 20px;
-    border-radius: 8px;
+    justify-content: space-between;
+    padding: 50px 0 0;
+    background: linear-gradient(to right, #E4E1D0, #C4BEA5);
 }
 
 .presentation-text {
-    flex: 1;
+    width: 50%;
+    margin: 2em;
+    display: flex;
+    flex-direction: column;
+}
+
+.presentation-image {
+    width: 50%;
+    position: relative;
+}
+
+.presentation-image img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px 0 0 0;
 }
 
 .sections {
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    gap: 20px;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    padding: 20px;
 }
 
 .section {
-    background-color: #ffffff;
+    flex: 1 1 calc(50% - 40px);
+    margin: 20px;
     padding: 20px;
-    border-radius: 8px;
+    background-color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 10px;
+    text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
 }
 
 .section h2 {
-    margin-top: 0;
+    margin-bottom: 15px;
     color: #2c3e50;
 }
 
 .section ul {
-    list-style: none;
+    list-style-type: none;
     padding: 0;
 }
 
 .section ul li {
-    margin-bottom: 10px;
+    margin: 10px 0;
 }
 
 footer {

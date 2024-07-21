@@ -11,7 +11,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
@@ -21,17 +21,17 @@
                 <td>{{ habitat.name }}</td>
                 <td>{{ habitat.description }}</td>
                 <td>
-                    <a href="{{ path('app_habitat_show', {'id': habitat.id}) }}">show</a>
-                    <a href="{{ path('app_habitat_edit', {'id': habitat.id}) }}">edit</a>
+                    <a href="{{ path('habitat_show', {'id': habitat.id}) }}">show</a>
+                    <a href="{{ path('habitat_edit', {'id': habitat.id}) }}">edit</a>
                 </td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
 
-    <a href="{{ path('app_habitat_new') }}">Create new</a>
+    <a href="{{ path('habitat_new') }}">Create new</a>
 {% endblock %}

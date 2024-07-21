@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Consultation{% endblock %}
+
+{% block body %}
+    <h1>Consultation</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Nom de l'animal</th>
+                <td>{{ consultation.animalName }}</td>
+            </tr>
+            <tr>
+                <th>Nombre de vues</th>
+                <td>{{ consultation.viewCount }}</td>
+            </tr>
+            <tr>
+                <th>Détails</th>
+                <td>{{ consultation.details }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('consultation_index') }}" class="btn btn-secondary">Retour à la liste</a>
+    <a href="{{ path('consultation_edit', {'id': consultation.id}) }}" class="btn btn-primary">Modifier</a>
+
+    {{ include('consultation/_delete_form.html.twig', {'id': consultation.id}) }}
+{% endblock %}

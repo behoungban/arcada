@@ -6,47 +6,50 @@
 {% block body %}
     <main>
         <section class="presentation">
-            <img src="{{ asset('images/zoo_arcada_main.jpg') }}" alt="Zoo Arcadia">
             <div class="presentation-text">
                 <h1>Bienvenue au Zoo Arcadia</h1>
                 <p>Découvrez la beauté de la nature et la diversité de la faune dans notre zoo. Profitez d'une expérience inoubliable avec nos habitats variés et nos services exceptionnels.</p>
+                <a href="{{ path('habitat_index') }}" class="button">Découvrez les habitats</a>
+            </div>
+            <div class="presentation-image">
+                <img src="{{ asset('images/Parc/full-shot-woman-feeding-goats.jpg') }}" alt="Zoo Arcadia">
             </div>
         </section>
         
-        <section class="sections">
-            <div class="section">
-                <h2>Nos Habitats</h2>
-                <ul>
-                    {% for habitat in habitats %}
-                        <li>{{ habitat.name }}: {{ habitat.description }}</li>
-                    {% endfor %}
-                </ul>
+        <section class="services">
+            <h2>Nos Services</h2>
+            <div class="service-list">
+                {% for service in services %}
+                    <div class="service">
+                        <img src="{{ asset(service.imageUrl) }}" alt="{{ service.name }}">
+                        <h3>{{ service.name }}</h3>
+                        <p>{{ service.description }}</p>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="section">
-                <h2>Nos Services</h2>
-                <ul>
-                    {% for service in services %}
-                        <li>{{ service.name }}: {{ service.description }}</li>
-                    {% endfor %}
-                </ul>
+        </section>
+
+        <section class="animals">
+            <h2>Nos Animaux</h2>
+            <div class="animal-carousel">
+                {% for animal in animaux %}
+                    <div class="animal">
+                        <img src="{{ asset(animal.imageUrl) }}" alt="{{ animal.name }}">
+                        <p>{{ animal.name }} ({{ animal.species }})</p>
+                    </div>
+                {% endfor %}
             </div>
-            <div class="section">
-                <h2>Animaux</h2>
-                <ul>
-                    {% for habitat in habitats %}
-                        {% for animal in habitat.animals %}
-                            <li>{{ animal.name }} ({{ animal.species }}) - Habitat: {{ habitat.name }}</li>
-                        {% endfor %}
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="section">
-                <h2>Ce que nos visiteurs disent</h2>
-                <ul>
-                    {% for avis in avis %}
-                        <li>{{ avis.username }}: {{ avis.content }}</li>
-                    {% endfor %}
-                </ul>
+        </section>
+
+        <section class="testimonials">
+            <h2>Ce que nos visiteurs disent</h2>
+            <div class="testimonial-list">
+                {% for avis in avis %}
+                    <div class="testimonial">
+                        <p>{{ avis.content }}</p>
+                        <p class="username">{{ avis.username }}</p>
+                    </div>
+                {% endfor %}
             </div>
         </section>
     </main>

@@ -24,6 +24,9 @@ class Habitat
     #[ORM\OneToMany(mappedBy: 'habitat', targetEntity: Animal::class, cascade: ['persist', 'remove'], orphanRemoval: true)]
     private Collection $animals;
 
+    #[ORM\Column(length: 255, nullable: true)]
+    private ?string $imageUrl = null;
+
     public function __construct()
     {
         $this->animals = new ArrayCollection();
@@ -54,6 +57,18 @@ class Habitat
     public function setDescription(?string $description): static
     {
         $this->description = $description;
+
+        return $this;
+    }
+
+    public function getImageUrl(): ?string
+    {
+        return $this->imageUrl;
+    }
+
+    public function setImageUrl(?string $imageUrl): static
+    {
+        $this->imageUrl = $imageUrl;
 
         return $this;
     }

@@ -1,39 +1,34 @@
+<!-- templates/avis/index.html.twig -->
 {% extends 'base.html.twig' %}
 
-{% block title %}Avis index{% endblock %}
+{% block title %}Avis{% endblock %}
 
 {% block body %}
-    <h1>Avis index</h1>
+    <h1>Avis</h1>
 
     <table class="table">
         <thead>
             <tr>
-                <th>Id</th>
-                <th>Username</th>
-                <th>Content</th>
-                <th>IsApproved</th>
-                <th>actions</th>
+                <th>Pseudo</th>
+                <th>Avis</th>
+                <th>Actions</th>
             </tr>
         </thead>
         <tbody>
-        {% for avi in avis %}
+        {% for avis in avis %}
             <tr>
-                <td>{{ avi.id }}</td>
-                <td>{{ avi.username }}</td>
-                <td>{{ avi.content }}</td>
-                <td>{{ avi.isApproved ? 'Yes' : 'No' }}</td>
+                <td>{{ avis.username }}</td>
+                <td>{{ avis.content }}</td>
                 <td>
-                    <a href="{{ path('app_avis_show', {'id': avi.id}) }}">show</a>
-                    <a href="{{ path('app_avis_edit', {'id': avi.id}) }}">edit</a>
+                    {% if not avis.validated %}
+                        <form method="post" action="{{ path('avis_validate', {'id': avis.id}) }}" onsubmit="return confirm('Êtes-vous sûr de vouloir valider cet avis ?');">
+                            <input type="hidden" name="_token" value="{{ csrf_token('validate' ~ avis.id) }}">
+                            <button class="btn btn-success">Valider</button>
+                        </form>
+                    {% endif %}
                 </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="5">no records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('app_avis_new') }}">Create new</a>
 {% endblock %}

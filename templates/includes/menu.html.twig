@@ -1,12 +1,11 @@
-{# templates/includes/menu.html.twig #}
 <ul>
     <li><a href="{{ path('home') }}">Accueil</a></li>
     <li><a href="{{ path('service_index') }}">Services</a></li>
     <li><a href="{{ path('habitat_index') }}">Habitats</a></li>
-    <li><a href="{{ path('contact') }}">Contact</a></li>
+    <li><a href="{{ path('contact_index') }}">Contact</a></li>
     {% if is_granted('ROLE_ADMIN') %}
         <li><a href="{{ path('admin_home') }}">Admin Dashboard</a></li>
-        <li><a href="{{ path('admin_manage_users') }}">Gérer Utilisateurs</a></li>
+        <li><a href="{{ path('admin_manage_users') }}">Utilisateurs</a></li>
     {% elseif is_granted('ROLE_EMPLOYEE') %}
         <li><a href="{{ path('employee_home') }}">Espace Employé</a></li>
         <li><a href="{{ path('employee_manage_reviews') }}">Gérer Avis</a></li>
@@ -14,9 +13,7 @@
         <li><a href="{{ path('vet_home') }}">Espace Vétérinaire</a></li>
         <li><a href="{{ path('vet_reports') }}">Rapports</a></li>
     {% endif %}
-    {% if is_granted('IS_AUTHENTICATED_REMEMBERED') %}
-        <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
-    {% else %}
-        <li><a href="{{ path('app_login') }}">Connexion</a></li>
-    {% endif %}
+  {% if  is_granted('IS_AUTHENTICATED_FULLY') %}
+    <li><a href="{{ path('app_logout') }}">Déconnexion</a></li>
+{% endif %}
 </ul>
