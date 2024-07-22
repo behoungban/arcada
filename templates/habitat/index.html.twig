@@ -1,9 +1,9 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitats{% endblock %}
+{% block title %}Habitations{% endblock %}
 
 {% block body %}
-    <h1>Habitats</h1>
+    <h1>Habitations</h1>
     <div class="row">
         {% for habitat in habitats %}
             <div class="col-md-4">
@@ -12,13 +12,13 @@
                     <div class="card-body">
                         <h5 class="card-title">{{ habitat.name }}</h5>
                         <p>{{ habitat.description }}</p>
-                        <h6>Animals:</h6>
+                        <h6>Animaux:</h6>
                         <ul>
                             {% for animal in habitat.animals %}
                                 <li>{{ animal.name }} ({{ animal.species }})</li>
                             {% endfor %}
                         </ul>
-                        <a href="{{ path('habitat_show', {'id': habitat.id}) }}" class="btn btn-primary">View Details</a>
+                        <a href="{{ path('habitat_show', {'id': habitat.id}) }}" class="btn btn-primary">Voir les détails</a>
                     </div>
                 </div>
             </div>

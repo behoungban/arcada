@@ -1,0 +1,41 @@
+{% extends 'veterinaire/base.html.twig' %}
+
+{% block title %}Liste des consultations{% endblock %}
+
+{% block body %}
+    <h1>Liste des consultations</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Animal</th>
+                <th>Date de passage</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for consultation in consultations %}
+                <tr>
+                    <td>{{ consultation.id }}</td>
+                    <td>{{ consultation.animal.name }}</td>
+                    <td>{{ consultation.datePassage|date('Y-m-d H:i') }}</td>
+                    <td>
+                        <a href="{{ path('consultation_show', {'id': consultation.id}) }}" class="btn btn-info">Afficher</a>
+                        <a href="{{ path('consultation_edit', {'id': consultation.id}) }}" class="btn btn-warning">Modifier</a>
+                        <form method="post" action="{{ path('consultation_delete', {'id': consultation.id}) }}" style="display:inline;">
+                            <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ consultation.id) }}">
+                            <button class="btn btn-danger">Supprimer</button>
+                        </form>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucune consultation trouvée</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('consultation_new') }}" class="btn btn-success">Créer une nouvelle consultation</a>
+{% endblock %}

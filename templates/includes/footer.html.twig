@@ -1,0 +1,43 @@
+{% if app.user is not defined %}
+<footer class="bd-footer py-4 mt-5 bg-body-tertiary">
+    <div class="container py-4 px-4 px-md-3 text-body-secondary">
+        <div class="row">
+            <div class="col-6 col-lg-2 mb-3 footer-logo">
+                <img src="{{ asset('images/logo_arcada.svg') }}" alt="Zoo Arcadia Logo" class="logo">
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+                <h5>Menu</h5>
+                <ul class="list-unstyled">
+                    <li><a href="{{ path('home') }}">Accueil</a></li>
+                    <li><a href="{{ path('service_index') }}">Services</a></li>
+                    <li><a href="{{ path('habitat_index') }}">Habitats</a></li>
+                    <li><a href="{{ path('contact_index') }}">Contact</a></li>
+                    <li><a href="{{ path('opening_hours_index') }}">Horaires</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+                <h5>Suivez-nous</h5>
+                <ul class="list-unstyled">
+                    <li><a href="#" class="text-white">Facebook</a></li>
+                    <li><a href="#" class="text-white">Twitter</a></li>
+                    <li><a href="#" class="text-white">Instagram</a></li>
+                </ul>
+            </div>
+            <div class="col-6 col-lg-2 mb-3">
+                <h5>Zoo Arcadia</h5>
+                <p>1234 Avenue des Animaux, 75000 Paris, France</p>
+            </div>
+            <div class="col-6 col-lg-2 offset-lg-1 mb-3">
+                <h5>Laisser un avis</h5>
+                <div class="form-container">
+                    {{ form_start(form) }}
+                    {{ form_row(form.username) }}
+                    {{ form_row(form.content) }}
+                    <button class="btn btn-success">Envoyer</button>
+                    {{ form_end(form) }}
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
+{% endif %}

@@ -7,10 +7,15 @@ body {
     background-color: #f4f4f9;
 }
 
+h2 {
+    display: flex;
+    justify-content: center;
+}
+
 header {
     background: linear-gradient(to right, #E4E1D0, #D8D4C4);
     padding: 20px 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
 header nav {
@@ -22,8 +27,8 @@ header nav {
 }
 
 header nav a.logo img {
-    width: 60px;
-    height: 60px;
+    width: 100px;
+    height: 100px;
 }
 
 header nav ul {
@@ -53,90 +58,159 @@ header nav ul li a:hover {
     justify-content: space-between;
     padding: 50px 0 0;
     background: linear-gradient(to right, #E4E1D0, #C4BEA5);
+    flex-wrap: wrap;
 }
 
 .presentation-text {
-    width: 50%;
+    width: 100%;
+    max-width: 600px;
     margin: 2em;
     display: flex;
     flex-direction: column;
 }
 
 .presentation-image {
-    width: 50%;
+    width: 100%;
+    max-width: 600px;
     position: relative;
+    display: flex;
+    justify-content: center;
 }
 
 .presentation-image img {
     width: 100%;
     height: auto;
-    border-radius: 8px 0 0 8px;
+    border-radius: 8px 0 0 0;
 }
 
 .presentation h1 {
     font-size: 46px;
-    font-weight: 800; /* Extra bold */
+    font-weight: 800;
     color: #1A202C;
 }
 
 .presentation p {
     font-size: 16px;
-    font-weight: 500; /* Medium */
+    font-weight: 500;
     color: #1A202C;
 }
 
-.button {
-    display: inline-block;
-    padding: 10px 20px;
-    margin-top: 20px;
-    background-color: #1A202C;
-    color: #fff;
-    text-decoration: none;
-    border: none;
-    border-radius: 5px;
-    text-align: center;
-    font-weight: 500;
-    cursor: pointer;
+.btn-primary {
+    background-color: white !important;
+    color: black !important;
+    border: none !important;
+    border-radius: 2em !important;
+}
+
+.btn-secondary {
+    background-color: #E4E1D0 !important;
+    color: black !important;
+    border: none !important;
+    border-radius: 2em !important;
 }
 
 .button:hover {
     background-color: #333;
 }
 
-.sections, .services, .animals, .testimonials {
+.sections,
+.services,
+.animals,
+.testimonials {
     padding: 20px 0;
 }
 
-.service-list, .animal-carousel, .testimonial-list {
+.service-list,
+.animal-carousel,
+.testimonial-list {
     display: flex;
     flex-wrap: wrap;
     gap: 20px;
 }
 
-.service, .animal, .testimonial {
+.service,
+.animal,
+.testimonial {
     flex: 1 1 calc(33.333% - 40px);
     background-color: #ffffff;
     padding: 20px;
     border-radius: 10px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
     text-align: center;
 }
 
-.service img, .animal img {
+.service img,
+.animal img {
     max-width: 100%;
     height: auto;
     border-radius: 8px;
 }
 
+.animals {
+    background: linear-gradient(to right, #E4E1D0, #C4BEA5);
+}
+
 footer {
     text-align: center;
     padding: 20px;
-    background-color: #2c3e50;
-    color: #ecf0f1;
+    background: linear-gradient(to right, #E4E1D0, #D8D4C4);
+    color: black;
     margin-top: 40px;
     border-top: 1px solid #e7e7e7;
+    font-size: 20px;
 }
 
 footer p {
     margin: 0;
+}
+
+footer a {
+    color: black;
+    text-decoration: none;
+}
+
+footer a:hover {
+    color: #3498db;
+}
+
+.footer-logo img {
+    width: 200px;
+    height: auto;
+}
+
+.btn-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.form-container {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+@media (max-width: 768px) {
+    .presentation {
+        flex-direction: column;
+    }
+
+    .presentation-text,
+    .presentation-image {
+        width: 100%;
+    }
+
+    .service,
+    .animal,
+    .testimonial {
+        flex: 1 1 calc(50% - 20px);
+    }
+}
+
+@media (max-width: 480px) {
+    .service,
+    .animal,
+    .testimonial {
+        flex: 1 1 100%;
+    }
 }

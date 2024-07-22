@@ -1,11 +1,17 @@
-{% extends 'base.html.twig' %}
+{% extends 'employee/base.html.twig' %}
 
-{% block title %}New EtatAnimal{% endblock %}
+{% block title %}Nouvel État Animal{% endblock %}
 
 {% block body %}
-    <h1>Create new EtatAnimal</h1>
+    <h1>Créer un nouvel état pour un animal</h1>
 
-    {{ include('etat_animal/_form.html.twig') }}
-
-    <a href="{{ path('app_etat_animal_index') }}">back to list</a>
+    {{ form_start(form) }}
+        {{ form_row(form.etat) }}
+        {{ form_row(form.nourriture) }}
+        {{ form_row(form.grammage) }}
+        {{ form_row(form.datePassage) }}
+        {{ form_row(form.detailEtat) }}
+        {{ form_row(form.animal) }}
+        <button class="btn btn-success">Enregistrer</button>
+    {{ form_end(form) }}
 {% endblock %}

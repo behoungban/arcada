@@ -1,31 +1,31 @@
 <?php
 
-// src/Controller/ConsultationController.php
 namespace App\Controller;
 
 use App\Entity\Consultation;
 use App\Form\ConsultationType;
 use App\Repository\ConsultationRepository;
+use App\Repository\NourritureRepository;
 use Doctrine\ORM\EntityManagerInterface;
-use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
-#[Route('/consultation')]
+#[Route('/veterinaire')]
 class ConsultationController extends AbstractController
 {
-    #[Route('/', name: 'consultation_index', methods: ['GET'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/consultations', name: 'consultation_index', methods: ['GET'])]
+    #[IsGranted('ROLE_VET')]
     public function index(ConsultationRepository $consultationRepository): Response
     {
-        return $this->render('consultation/index.html.twig', [
+        return $this->render('veterinaire/consultation/index.html.twig', [
             'consultations' => $consultationRepository->findAll(),
         ]);
     }
 
-    #[Route('/new', name: 'consultation_new', methods: ['GET', 'POST'])]
+    #[Route('/consultations/new', name: 'consultation_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_VET')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
     {
@@ -40,22 +40,24 @@ class ConsultationController extends AbstractController
             return $this->redirectToRoute('consultation_index');
         }
 
-        return $this->renderForm('consultation/new.html.twig', [
-            'consultation' => $consultation,
-            'form' => $form,
+        return $this->render('veterinaire/consultation/new.html.twig', [
+            'form' => $form->createView(),
         ]);
     }
 
-    #[Route('/{id}', name: 'consultation_show', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
-    public function show(Consultation $consultation): Response
+    #[Route('/consultations/{id}', name: 'consultation_show', methods: ['GET'])]
+    #[IsGranted('ROLE_VET')]
+    public function show(Consultation $consultation, NourritureRepository $nourritureRepository): Response
     {
-        return $this->render('consultation/show.html.twig', [
+        $nourritures = $nourritureRepository->findBy(['animal' => $consultation->getAnimal()]);
+
+        return $this->render('veterinaire/consultation/show.html.twig', [
             'consultation' => $consultation,
+            'nourritures' => $nourritures,
         ]);
     }
 
-    #[Route('/{id}/edit', name: 'consultation_edit', methods: ['GET', 'POST'])]
+    #[Route('/consultations/{id}/edit', name: 'consultation_edit', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_VET')]
     public function edit(Request $request, Consultation $consultation, EntityManagerInterface $entityManager): Response
     {
@@ -68,14 +70,14 @@ class ConsultationController extends AbstractController
             return $this->redirectToRoute('consultation_index');
         }
 
-        return $this->renderForm('consultation/edit.html.twig', [
+        return $this->render('veterinaire/consultation/edit.html.twig', [
+            'form' => $form->createView(),
             'consultation' => $consultation,
-            'form' => $form,
         ]);
     }
 
-    #[Route('/{id}', name: 'consultation_delete', methods: ['POST'])]
-    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/consultations/{id}', name: 'consultation_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_VET')]
     public function delete(Request $request, Consultation $consultation, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('delete'.$consultation->getId(), $request->request->get('_token'))) {

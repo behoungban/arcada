@@ -1,18 +1,22 @@
-{% extends 'base.html.twig' %}
+{% extends 'employee/base.html.twig' %}
 
-{% block title %}EtatAnimal{% endblock %}
+{% block title %}État de l'Animal{% endblock %}
 
 {% block body %}
-    <h1>EtatAnimal</h1>
+    <h1>État de l'Animal</h1>
 
     <table class="table">
         <tbody>
             <tr>
-                <th>Id</th>
+                <th>ID</th>
                 <td>{{ etat_animal.id }}</td>
             </tr>
             <tr>
-                <th>Etat</th>
+                <th>Animal</th>
+                <td>{{ etat_animal.animal.name }}</td>
+            </tr>
+            <tr>
+                <th>État</th>
                 <td>{{ etat_animal.etat }}</td>
             </tr>
             <tr>
@@ -20,23 +24,24 @@
                 <td>{{ etat_animal.nourriture }}</td>
             </tr>
             <tr>
-                <th>Grammage</th>
+                <th>Poids</th>
                 <td>{{ etat_animal.grammage }}</td>
             </tr>
             <tr>
-                <th>DatePassage</th>
-                <td>{{ etat_animal.datePassage ? etat_animal.datePassage|date('Y-m-d H:i:s') : '' }}</td>
+                <th>Date de Passage</th>
+                <td>{{ etat_animal.datePassage|date('Y-m-d H:i') }}</td>
             </tr>
             <tr>
-                <th>DetailEtat</th>
+                <th>Détail de l'État</th>
                 <td>{{ etat_animal.detailEtat }}</td>
             </tr>
         </tbody>
     </table>
 
-    <a href="{{ path('app_etat_animal_index') }}">back to list</a>
-
-    <a href="{{ path('app_etat_animal_edit', {'id': etat_animal.id}) }}">edit</a>
-
-    {{ include('etat_animal/_delete_form.html.twig') }}
+    <a href="{{ path('etat_animal_index') }}" class="btn btn-primary">Retour à la liste</a>
+    <a href="{{ path('etat_animal_edit', {'id': etat_animal.id}) }}" class="btn btn-warning">Modifier</a>
+    <form method="post" action="{{ path('etat_animal_delete', {'id': etat_animal.id}) }}" style="display:inline;">
+        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ etat_animal.id) }}">
+        <button class="btn btn-danger">Supprimer</button>
+    </form>
 {% endblock %}

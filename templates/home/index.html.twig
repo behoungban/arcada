@@ -4,62 +4,78 @@
 {% block title %}Accueil{% endblock %}
 
 {% block body %}
-    <main>
-        <section class="presentation">
-            <div class="presentation-text">
-                <h1>Bienvenue au Zoo Arcadia</h1>
-                <p>Découvrez la beauté de la nature et la diversité de la faune dans notre zoo. Profitez d'une expérience inoubliable avec nos habitats variés et nos services exceptionnels.</p>
-                <button type="button" class="btn btn-outline-secondary " onclick="window.location.href='{{ path('habitat_index') }}'">Découvrez les habitats</button>
-            </div>
-            <div class="presentation-image">
-                <img src="{{ asset('images/Parc/full-shot-woman-feeding-goats.jpg') }}" alt="Zoo Arcadia">
-            </div>
-        </section>
-        
-        <section class="services">
-            <h2>Nos Services</h2>
-            <div class="service-list">
+<main>
+    <section class="presentation">
+        <div class="presentation-text">
+            <h1>Découvrez notre Zoo Arcadia</h1>
+            <p>Admirez la beauté de la nature et la diversité de la faune dans notre zoo. Profitez d'une expérience inoubliable grâce à nos habitats variés et nos services exceptionnels. Explorez nos habitats et laissez-vous émerveiller par la richesse de notre faune.</p>
+            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ path('habitat_index') }}'">Découvrez les habitats</button>
+        </div>
+        <div class="presentation-image">
+            <img src="{{ asset('images/Parc/full-shot-woman-feeding-goats.jpg') }}" alt="Zoo Arcadia">
+        </div>
+    </section>
+
+    <section class="services">
+        <h2>Nos Services</h2>
+        <div class="service-list">
+            <div class="row align-items-start">
                 {% for service in services %}
-                    <div class="service">
-                        <img src="{{ asset(service.imageUrl) }}" alt="{{ service.name }}">
+                    <div class="col service-image">
+                        <img src="{{ service.imageUrl ? asset(service.imageUrl) : 'https://via.placeholder.com/150' }}" alt="{{ service.name }}">
+                    </div>
+                    <div class="col service-description">
                         <h3>{{ service.name }}</h3>
                         <p>{{ service.description }}</p>
                     </div>
                 {% endfor %}
             </div>
-        </section>
+            <div class="btn-container">
+                <button type="button" class="btn btn-secondary btn-sm" onclick="window.location.href='{{ path('service_index') }}'">En savoir plus</button>
+            </div>
+        </div>
+    </section>
 
-        <section class="animals">
-            <h2>Nos Animaux</h2>
-            <div class="animal-carousel">
+    <section class="animals">
+        <h2>Nos Animaux</h2>
+        <div id="animalCarousel" class="carousel slide" data-bs-ride="carousel">
+            <div class="carousel-inner">
                 {% for animal in animaux %}
-                    <div class="animal">
-                        <img src="{{ asset(animal.imageUrl) }}" alt="{{ animal.name }}">
-                        <p>{{ animal.name }} ({{ animal.species }})</p>
+                    <div class="carousel-item {% if loop.first %}active{% endif %}">
+                        <img src="{{ animal.imageUrl ? asset(animal.imageUrl) : 'http://via.placeholder.com/640x360' }}" class="d-block w-100" alt="{{ animal.name }}">
+                        <div class="carousel-caption d-none d-md-block">
+                            <h5>{{ animal.name }}</h5>
+                            <p>{{ animal.species }}</p>
+                        </div>
                     </div>
                 {% endfor %}
             </div>
-        </section>
+            <button class="carousel-control-prev" type="button" data-bs-target="#animalCarousel" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#animalCarousel" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+        <div class="btn-container">
+            <button type="button" class="btn btn-primary btn-sm" onclick="window.location.href='{{ path('animal_index') }}'">En savoir plus</button>
+        </div>
+    </section>
 
-        <section class="testimonials">
-            <h2>Ce que nos visiteurs disent</h2>
-            <div class="testimonial-list">
-                {% for avis in avis %}
-                    <div class="testimonial">
-                        <p>{{ avis.content }}</p>
-                        <p class="username">{{ avis.username }}</p>
-                    </div>
-                {% endfor %}
-            </div>
-        </section>
+    <section class="testimonials">
+        <h2>Ce que nos visiteurs disent</h2>
+        <div class="testimonial-list">
+            {% for avis in avis %}
+                <div class="testimonial">
+                    <p>{{ avis.content }}</p>
+                    <p class="username">{{ avis.username }}</p>
+                </div>
+            {% endfor %}
+        </div>
 
-        <section class="leave-review">
-            <h2>Laisser un avis</h2>
-            {{ form_start(form) }}
-                {{ form_row(form.username) }}
-                {{ form_row(form.content) }}
-                <button class="btn btn-success">Envoyer</button>
-            {{ form_end(form) }}
-        </section>
-    </main>
+    </section>
+
+</main>
 {% endblock %}

@@ -1,13 +1,19 @@
-{% extends 'base.html.twig' %}
+{% extends 'employee/base.html.twig' %}
 
-{% block title %}Edit EtatAnimal{% endblock %}
+{% block title %}Modifier L'État Animal{% endblock %}
 
 {% block body %}
-    <h1>Edit EtatAnimal</h1>
+    <h1>Modifier l'état de l'animal</h1>
 
-    {{ include('etat_animal/_form.html.twig', {'button_label': 'Update'}) }}
+    {{ form_start(form) }}
+        {{ form_row(form.etat) }}
+        {{ form_row(form.nourriture) }}
+        {{ form_row(form.grammage) }}
+        {{ form_row(form.datePassage) }}
+        {{ form_row(form.detailEtat) }}
+        {{ form_row(form.animal) }}
+        <button class="btn btn-success">Enregistrer les modifications</button>
+    {{ form_end(form) }}
 
-    <a href="{{ path('app_etat_animal_index') }}">back to list</a>
-
-    {{ include('etat_animal/_delete_form.html.twig') }}
+    <a href="{{ path('etat_animal_index') }}" class="btn btn-primary">Retour à la liste</a>
 {% endblock %}

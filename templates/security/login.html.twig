@@ -6,23 +6,19 @@
 {% block body %}
     <h1>Connexion</h1>
 
-    <form method="post" action="{{ path('app_login') }}">
-        {% if error %}
+   <form method="post" action="{{ path('app_login') }}">
+  {% if error %}
             <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
         {% endif %}
-
-        <div>
-            <label for="email">Email:</label>
-            <input type="text" id="email" name="_username" value="{{ last_username }}" required autofocus>
-        </div>
-
-        <div>
-            <label for="password">Mot de passe:</label>
-            <input type="password" id="password" name="_password" required>
-        </div>
-
-        <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}">
-
-        <button type="submit">Se connecter</button>
-    </form>
+  <div class="mb-3">
+    <label for="exampleInputEmail1" class="form-label">Email :</label>
+    <input type="email" class="form-control"id="email" name="_username" value="{{ last_username }}" required autofocus>
+  </div>
+  <div class="mb-3">
+    <label for="password" class="form-label">Password</label>
+    <input type="password" class="form-control" id="password" required>
+  </div>
+  
+  <button type="submit" class="btn btn-primary">Se connecter</button>
+</form>
 {% endblock %}

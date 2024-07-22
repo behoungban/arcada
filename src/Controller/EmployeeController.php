@@ -7,6 +7,7 @@ use App\Entity\Nourriture;
 use App\Form\NourritureType;
 use App\Repository\AvisRepository;
 use App\Repository\AnimalRepository;
+use App\Repository\NourritureRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,11 +18,12 @@ use Symfony\Component\Routing\Annotation\Route;
 class EmployeeController extends AbstractController
 {
     #[Route('/home', name: 'employee_home')]
-    public function index(): Response
+    public function index(AvisRepository $avisRepository): Response
     {
         $avisList = $avisRepository->findAll();
         return $this->render('employee/home.html.twig', [
             'controller_name' => 'EmployeeController',
+            'avisList' => $avisList,
         ]);
     }
 
@@ -47,9 +49,10 @@ class EmployeeController extends AbstractController
     }
 
     #[Route('/manage-food', name: 'employee_manage_food')]
-    public function manageFood(AnimalRepository $animalRepository, Request $request, EntityManagerInterface $entityManager): Response
+    public function manageFood(AnimalRepository $animalRepository, NourritureRepository $nourritureRepository, Request $request, EntityManagerInterface $entityManager): Response
     {
         $animals = $animalRepository->findAll();
+        $nourritures = $nourritureRepository->findAll();
         $nourriture = new Nourriture();
         $form = $this->createForm(NourritureType::class, $nourriture);
         $form->handleRequest($request);
@@ -63,6 +66,7 @@ class EmployeeController extends AbstractController
 
         return $this->render('employee/manage_food.html.twig', [
             'animals' => $animals,
+            'nourritures' => $nourritures,
             'form' => $form->createView(),
         ]);
     }

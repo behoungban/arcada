@@ -1,19 +1,10 @@
 {% extends 'employee/base.html.twig' %}
 
-{% block title %}Gérer Nourriture{% endblock %}
+{% block title %}Gestion de la Nourriture {% endblock %}
 
 {% block body %}
-    <h1>Gérer Nourriture</h1>
+    <h1>Gestion de la Nourriture</h1>
 
-    {{ form_start(form) }}
-        {{ form_row(form.animal) }}
-        {{ form_row(form.type) }}
-        {{ form_row(form.quantity) }}
-        {{ form_row(form.dateGiven) }}
-        <button class="btn btn-primary">Ajouter</button>
-    {{ form_end(form) }}
-
-    <h2>Nourriture ajoutée</h2>
     <table class="table">
         <thead>
             <tr>
@@ -31,13 +22,14 @@
                     <td>{{ nourriture.animal.name }}</td>
                     <td>{{ nourriture.type }}</td>
                     <td>{{ nourriture.quantity }}</td>
-                    <td>{{ nourriture.dateGiven|date('Y-m-d H:i') }}</td>
-                </tr>
-            {% else %}
-                <tr>
-                    <td colspan="5">Aucune nourriture ajoutée</td>
+                    <td>{{ nourriture.dateGiven ? nourriture.dateGiven|date('Y-m-d H:i') : 'N/A' }}</td>
                 </tr>
             {% endfor %}
         </tbody>
     </table>
+
+    {{ form_start(form) }}
+        {{ form_widget(form) }}
+        <button class="btn btn-success">Ajouter</button>
+    {{ form_end(form) }}
 {% endblock %}
