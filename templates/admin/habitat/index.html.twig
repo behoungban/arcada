@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Liste des Habitats{% endblock %}
+
+{% block body %}
+    <h1>Liste des Habitats</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Description</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for habitat in habitats %}
+            <tr>
+                <td>{{ habitat.id }}</td>
+                <td>{{ habitat.name }}</td>
+                <td>{{ habitat.description }}</td>
+                <td><img src="{{ asset('uploads/' ~ habitat.imageUrl) }}" alt="{{ habitat.name }}" width="100"></td>
+                <td>
+                    <a href="{{ path('habitat_show', {'id': habitat.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('habitat_edit', {'id': habitat.id}) }}" class="btn btn-warning">Modifier</a>
+                    <form action="{{ path('habitat_delete', {'id': habitat.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ habitat.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('habitat_new') }}" class="btn btn-success">Créer un nouveau</a>
+{% endblock %}

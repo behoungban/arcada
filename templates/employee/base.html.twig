@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}Employee - Zoo Arcadia{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('gentelella/vendors/bootstrap/dist/css/bootstrap.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('gentelella/vendors/font-awesome/css/font-awesome.min.css') }}">
+        <link rel="stylesheet" href="{{ asset('gentelella/build/css/custom.min.css') }}">
+         <link rel="stylesheet" href="{{ asset('styles/dashboard.css') }}">
+    {% endblock %}
+</head>
+<body class="nav-md">
+    <div class="container body">
+        <div class="main_container">
+            <!-- Sidebar -->
+            <div class="col-md-3 left_col">
+                <div class="left_col scroll-view">
+                    <div class="navbar nav_title" style="border: 0;">
+                        <a href="{{ path('employee_home') }}" class="site_title"><i class="fa fa-paw"></i> <span>Employee Zoo Arcadia</span></a>
+                    </div>
+                    <div class="clearfix"></div>
+                    <!-- menu profile quick info -->
+                    <div class="profile clearfix">
+                        <div class="profile_pic">
+                            <img src="{{ asset('gentelella/production/images/img.jpg') }}" alt="..." class="img-circle profile_img">
+                        </div>
+                        <div class="profile_info">
+                            <span>Bienvenue,</span>
+                            <h2>{{ app.user.username }}</h2>
+                        </div>
+                    </div>
+                    <!-- /menu profile quick info -->
+                    <br />
+
+                    <!-- sidebar menu -->
+                    <div id="sidebar-menu" class="main_menu_side hidden-print main_menu">
+                        <div class="menu_section">
+                            <h3>Général</h3>
+                            <ul class="nav side-menu">
+                                <li><a href="{{ path('employee_home') }}"><i class="fa fa-home"></i> Dashboard </a></li>
+                                <li><a href="{{ path('employee_manage_reviews') }}"><i class="fa fa-comments"></i> Gérer Avis </a></li>
+                                <li><a href="{{ path('employee_manage_food') }}"><i class="fa fa-cutlery"></i> Gérer Nourriture </a></li>
+                            </ul>
+                        </div>
+                    </div>
+                    <!-- /sidebar menu -->
+                </div>
+            </div>
+            <!-- /Sidebar -->
+
+            <!-- Topbar -->
+            <div class="top_nav">
+                <div class="nav_menu">
+                    <nav>
+                        <div class="nav toggle">
+                            <a id="menu_toggle"><i class="fa fa-bars"></i></a>
+                        </div>
+                        <ul class="nav navbar-nav navbar-right">
+                            <li class="">
+                                <a href="javascript:;" class="user-profile dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                    <img src="{{ asset('gentelella/production/images/img.jpg') }}" alt="">{{ app.user.username }}
+                                    <span class=" fa fa-angle-down"></span>
+                                </a>
+                                <ul class="dropdown-menu dropdown-usermenu pull-right">
+                                    <li><a href="{{ path('app_logout') }}"><i class="fa fa-sign-out pull-right"></i> Déconnexion</a></li>
+                                </ul>
+                            </li>
+                        </ul>
+                    </nav>
+                </div>
+            </div>
+            <!-- /Topbar -->
+            
+            <!-- Page Content -->
+            <div class="right_col" role="main">
+                {% block body %}{% endblock %}
+            </div>
+            <!-- /Page Content -->
+            
+            <!-- Footer -->
+            <footer>
+                <div class="pull-right">
+                    Zoo Arcadia - Espace Employé
+                </div>
+                <div class="clearfix"></div>
+            </footer>
+            <!-- /Footer -->
+        </div>
+    </div>
+    {% block javascripts %}
+        <script src="{{ asset('gentelella/vendors/jquery/dist/jquery.min.js') }}"></script>
+        <script src="{{ asset('gentelella/vendors/bootstrap/dist/js/bootstrap.bundle.min.js') }}"></script>
+        <script src="{{ asset('gentelella/build/js/custom.min.js') }}"></script>
+    {% endblock %}
+</body>
+</html>

@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;700;800&display=swap');
 
 body {
     font-family: 'Plus Jakarta Sans', sans-serif;
@@ -19,11 +19,6 @@ header nav {
     display: flex;
     align-items: center;
     justify-content: space-between;
-}
-
-header nav a.logo {
-    display: inline-block;
-    margin-right: 20px;
 }
 
 header nav a.logo img {
@@ -75,39 +70,62 @@ header nav ul li a:hover {
 .presentation-image img {
     width: 100%;
     height: auto;
-    border-radius: 8px 0 0 0;
+    border-radius: 8px 0 0 8px;
 }
 
-.sections {
+.presentation h1 {
+    font-size: 46px;
+    font-weight: 800; /* Extra bold */
+    color: #1A202C;
+}
+
+.presentation p {
+    font-size: 16px;
+    font-weight: 500; /* Medium */
+    color: #1A202C;
+}
+
+.button {
+    display: inline-block;
+    padding: 10px 20px;
+    margin-top: 20px;
+    background-color: #1A202C;
+    color: #fff;
+    text-decoration: none;
+    border: none;
+    border-radius: 5px;
+    text-align: center;
+    font-weight: 500;
+    cursor: pointer;
+}
+
+.button:hover {
+    background-color: #333;
+}
+
+.sections, .services, .animals, .testimonials {
+    padding: 20px 0;
+}
+
+.service-list, .animal-carousel, .testimonial-list {
     display: flex;
     flex-wrap: wrap;
-    justify-content: space-around;
-    padding: 20px;
+    gap: 20px;
 }
 
-.section {
-    flex: 1 1 calc(50% - 40px);
-    margin: 20px;
-    padding: 20px;
+.service, .animal, .testimonial {
+    flex: 1 1 calc(33.333% - 40px);
     background-color: #ffffff;
-    border: 1px solid #ddd;
+    padding: 20px;
     border-radius: 10px;
-    text-align: center;
     box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    text-align: center;
 }
 
-.section h2 {
-    margin-bottom: 15px;
-    color: #2c3e50;
-}
-
-.section ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-.section ul li {
-    margin: 10px 0;
+.service img, .animal img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
 footer {

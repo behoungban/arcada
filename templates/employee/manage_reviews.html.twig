@@ -1,0 +1,51 @@
+{% extends 'employee/base.html.twig' %}
+
+{% block title %}Gérer Avis{% endblock %}
+
+{% block body %}
+    <h1>Dashboard Employé</h1>
+
+    <h2>Gestion des Avis</h2>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Utilisateur</th>
+                <th>Contenu</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for avis in avisList %}
+                <tr>
+                    <td>{{ avis.id }}</td>
+                    <td>{{ avis.username }}</td>
+                    <td>{{ avis.content }}</td>
+                    <td>
+                       <div class="btn-group">
+                            {% if not avis.isApproved %}
+                                <form method="post" action="{{ path('avis_validate', {'id': avis.id}) }}">
+                                    <input type="hidden" name="_token" value="{{ csrf_token('validate' ~ avis.id) }}">
+                                    <button class="btn btn-success">Valider</button>
+                                </form>
+                            {% endif %}
+                            <form method="post" action="{{ path('avis_invalidate', {'id': avis.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('invalidate' ~ avis.id) }}">
+                                <button class="btn btn-warning">Invalider</button>
+                            </form>
+                            <form method="post" action="{{ path('avis_delete', {'id': avis.id}) }}">
+                                <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ avis.id) }}">
+                                <button class="btn btn-danger">Supprimer</button>
+                            </form>
+                        </div>
+                    </td>
+                </tr>
+            {% else %}
+                <tr>
+                    <td colspan="4">Aucun avis en attente</td>
+                </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

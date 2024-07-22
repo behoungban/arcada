@@ -1,0 +1,44 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Horaires d'ouverture{% endblock %}
+
+{% block body %}
+    <h1>Horaires d'ouverture</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Jour</th>
+                <th>Ouverture</th>
+                <th>Fermeture</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for opening_hour in opening_hours %}
+            <tr>
+                <td>{{ opening_hour.id }}</td>
+                <td>Lundi</td>
+                <td>{{ opening_hour.openingMonday ? opening_hour.openingMonday|date('H:i') : 'Fermé' }}</td>
+                <td>{{ opening_hour.closingMonday ? opening_hour.closingMonday|date('H:i') : 'Fermé' }}</td>
+                <td>
+                    <a href="{{ path('admin_opening_hours_show', {'id': opening_hour.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('admin_opening_hours_edit', {'id': opening_hour.id}) }}" class="btn btn-warning">Modifier</a>
+                    <form action="{{ path('admin_opening_hours_delete', {'id': opening_hour.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ opening_hour.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+            <!-- Repeat for other days -->
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('admin_opening_hours_new') }}" class="btn btn-success">Créer une nouvelle heure d'ouverture</a>
+{% endblock %}

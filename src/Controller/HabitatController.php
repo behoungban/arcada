@@ -1,6 +1,5 @@
 <?php
 
-// src/Controller/HabitatController.php
 namespace App\Controller;
 
 use App\Entity\Habitat;
@@ -17,14 +16,20 @@ use Symfony\Component\Routing\Annotation\Route;
 class HabitatController extends AbstractController
 {
     #[Route('/', name: 'habitat_index', methods: ['GET'])]
-    #[IsGranted('ROLE_USER')]
     public function index(HabitatRepository $habitatRepository): Response
     {
-        return $this->render('habitat/index.html.twig', [
-            'habitats' => $habitatRepository->findAll(),
+        $habitats = $habitatRepository->findAll();
+        $template = 'habitat/index.html.twig';
+
+        if ($this->isGranted('ROLE_ADMIN')) {
+            $template = 'admin/habitat/index.html.twig';
+        }
+
+        return $this->render($template, [
+            'habitats' => $habitats,
         ]);
     }
-
+    
     #[Route('/new', name: 'habitat_new', methods: ['GET', 'POST'])]
     #[IsGranted('ROLE_ADMIN')]
     public function new(Request $request, EntityManagerInterface $entityManager): Response
@@ -40,7 +45,7 @@ class HabitatController extends AbstractController
             return $this->redirectToRoute('habitat_index');
         }
 
-        return $this->renderForm('habitat/new.html.twig', [
+        return $this->renderForm('admin/habitat/new.html.twig', [
             'habitat' => $habitat,
             'form' => $form,
         ]);
@@ -50,7 +55,7 @@ class HabitatController extends AbstractController
     #[IsGranted('ROLE_USER')]
     public function show(Habitat $habitat): Response
     {
-        return $this->render('habitat/show.html.twig', [
+        return $this->render('admin/habitat/show.html.twig', [
             'habitat' => $habitat,
         ]);
     }
@@ -68,7 +73,7 @@ class HabitatController extends AbstractController
             return $this->redirectToRoute('habitat_index');
         }
 
-        return $this->renderForm('habitat/edit.html.twig', [
+        return $this->renderForm('admin/habitat/edit.html.twig', [
             'habitat' => $habitat,
             'form' => $form,
         ]);

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Index de la Nourriture{% endblock %}
+
+{% block body %}
+    <h1>Index de la Nourriture</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>ID</th>
+                <th>Animal</th>
+                <th>Type</th>
+                <th>Quantité</th>
+                <th>Date</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for nourriture in nourritures %}
+            <tr>
+                <td>{{ nourriture.id }}</td>
+                <td>{{ nourriture.animal.name }}</td>
+                <td>{{ nourriture.type }}</td>
+                <td>{{ nourriture.quantity }}</td>
+                <td>{{ nourriture.dateGiven|date('Y-m-d H:i') }}</td>
+                <td>
+                    <a href="{{ path('nourriture_show', {'id': nourriture.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('nourriture_edit', {'id': nourriture.id}) }}" class="btn btn-warning">Modifier</a>
+                    <form action="{{ path('nourriture_delete', {'id': nourriture.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ nourriture.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="6">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('nourriture_new') }}" class="btn btn-success">Créer nouveau</a>
+{% endblock %}

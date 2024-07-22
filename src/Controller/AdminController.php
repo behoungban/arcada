@@ -2,13 +2,24 @@
 
 namespace App\Controller;
 
+use App\Entity\User;
+use App\Form\UserType;
+use App\Repository\UserRepository;
+use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\Mailer\MailerInterface;
+use Symfony\Component\Mime\Email;
 use Symfony\Component\Routing\Annotation\Route;
+use Symfony\Component\PasswordHasher\Hasher\UserPasswordHasherInterface;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
 
+#[Route('/admin')]
 class AdminController extends AbstractController
 {
-    #[Route('/admin/home', name: 'admin_home')]
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/home', name: 'admin_home')]
     public function index(): Response
     {
         return $this->render('admin/home.html.twig', [
@@ -16,63 +27,101 @@ class AdminController extends AbstractController
         ]);
     }
 
-    #[Route('/admin/manage-users', name: 'admin_manage_users')]
-    public function manageUsers(): Response
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/manage-users', name: 'admin_manage_users')]
+    public function manageUsers(UserRepository $userRepository): Response
     {
         return $this->render('admin/manage_users.html.twig', [
-            'controller_name' => 'AdminController',
-        ]);
-    }
-}
-
-// src/Controller/EmployeeController.php
-namespace App\Controller;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-class EmployeeController extends AbstractController
-{
-    #[Route('/employee/home', name: 'employee_home')]
-    public function index(): Response
-    {
-        return $this->render('employee/home.html.twig', [
-            'controller_name' => 'EmployeeController',
+            'users' => $userRepository->findAll(),
         ]);
     }
 
-    #[Route('/employee/manage-reviews', name: 'employee_manage_reviews')]
-    public function manageReviews(): Response
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/user/new', name: 'user_new', methods: ['GET', 'POST'])]
+    public function newUser(Request $request, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher, MailerInterface $mailer): Response
     {
-        return $this->render('employee/manage_reviews.html.twig', [
-            'controller_name' => 'EmployeeController',
+        $user = new User();
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plaintextPassword = $form->get('password')->getData();
+            if ($plaintextPassword) {
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hashedPassword);
+            }
+            $entityManager->persist($user);
+            $entityManager->flush();
+
+            // Sending the email
+            $email = (new Email())
+                ->from('no-reply@zooarcadia.com')
+                ->to($user->getEmail())
+                ->subject('Votre compte a été créé')
+                ->html($this->renderView('emails/user_created.html.twig', [
+                    'firstname' => $user->getFirstname(),
+                    'email' => $user->getEmail()
+                ]));
+
+            $mailer->send($email);
+
+            return $this->redirectToRoute('admin_manage_users');
+        }
+
+        return $this->render('admin/user/new.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
         ]);
     }
-}
 
-// src/Controller/VetController.php
-namespace App\Controller;
-
-use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
-use Symfony\Component\HttpFoundation\Response;
-use Symfony\Component\Routing\Annotation\Route;
-
-class VetController extends AbstractController
-{
-    #[Route('/vet/home', name: 'vet_home')]
-    public function index(): Response
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/user/{id}', name: 'user_show', methods: ['GET'])]
+    public function showUser(User $user): Response
     {
-        return $this->render('vet/home.html.twig', [
-            'controller_name' => 'VetController',
+        return $this->render('admin/user/show.html.twig', [
+            'user' => $user,
         ]);
     }
 
-    #[Route('/vet/manage-appointments', name: 'vet_manage_appointments')]
-    public function manageAppointments(): Response
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/user/{id}/edit', name: 'user_edit', methods: ['GET', 'POST'])]
+    public function editUser(Request $request, User $user, EntityManagerInterface $entityManager, UserPasswordHasherInterface $passwordHasher): Response
     {
-        return $this->render('vet/manage_appointments.html.twig', [
-            'controller_name' => 'VetController',
+        $form = $this->createForm(UserType::class, $user);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $plaintextPassword = $form->get('password')->getData();
+            if ($plaintextPassword) {
+                $hashedPassword = $passwordHasher->hashPassword(
+                    $user,
+                    $plaintextPassword
+                );
+                $user->setPassword($hashedPassword);
+            }
+            $entityManager->flush();
+
+            return $this->redirectToRoute('admin_manage_users');
+        }
+
+        return $this->render('admin/user/edit.html.twig', [
+            'user' => $user,
+            'form' => $form->createView(),
         ]);
+    }
+
+    #[IsGranted('ROLE_ADMIN')]
+    #[Route('/user/{id}', name: 'user_delete', methods: ['POST'])]
+    public function deleteUser(Request $request, User $user, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $user->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($user);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('admin_manage_users');
     }
 }

@@ -9,7 +9,7 @@
             <div class="presentation-text">
                 <h1>Bienvenue au Zoo Arcadia</h1>
                 <p>Découvrez la beauté de la nature et la diversité de la faune dans notre zoo. Profitez d'une expérience inoubliable avec nos habitats variés et nos services exceptionnels.</p>
-                <a href="{{ path('habitat_index') }}" class="button">Découvrez les habitats</a>
+                <button type="button" class="btn btn-outline-secondary " onclick="window.location.href='{{ path('habitat_index') }}'">Découvrez les habitats</button>
             </div>
             <div class="presentation-image">
                 <img src="{{ asset('images/Parc/full-shot-woman-feeding-goats.jpg') }}" alt="Zoo Arcadia">
@@ -51,6 +51,15 @@
                     </div>
                 {% endfor %}
             </div>
+        </section>
+
+        <section class="leave-review">
+            <h2>Laisser un avis</h2>
+            {{ form_start(form) }}
+                {{ form_row(form.username) }}
+                {{ form_row(form.content) }}
+                <button class="btn btn-success">Envoyer</button>
+            {{ form_end(form) }}
         </section>
     </main>
 {% endblock %}

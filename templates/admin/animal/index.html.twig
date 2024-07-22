@@ -1,0 +1,43 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Animal index{% endblock %}
+
+{% block body %}
+    <h1>Liste des animaux</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Nom</th>
+                <th>Espèce</th>
+                <th>Image</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for animal in animals %}
+            <tr>
+                <td>{{ animal.id }}</td>
+                <td>{{ animal.name }}</td>
+                <td>{{ animal.species }}</td>
+                <td><img src="{{ asset('uploads/' ~ animal.imageUrl) }}" alt="{{ animal.name }}" width="100"></td>
+                <td>
+                    <a href="{{ path('animal_show', {'id': animal.id}) }}" class="btn btn-info">Voir</a>
+                    <a href="{{ path('animal_edit', {'id': animal.id}) }}" class="btn btn-warning">Éditer</a>
+                    <form action="{{ path('animal_delete', {'id': animal.id}) }}" method="post" style="display:inline;">
+                        <input type="hidden" name="_token" value="{{ csrf_token('delete' ~ animal.id) }}">
+                        <button class="btn btn-danger">Supprimer</button>
+                    </form>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="5">Aucun enregistrement trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('animal_new') }}" class="btn btn-success">Créer un nouvel animal</a>
+{% endblock %}

@@ -1,0 +1,22 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Ajouter un nouveau jour d'ouvertures
+{% endblock %}
+
+{% block body %}
+
+	<main class="container blockbody">
+		<section class="row">
+			<div class="col-12">
+				<div class="titlePage">
+					<h1 class="text-uppercase">Ajouter un nouveau jour d'ouvertures</h1>
+
+					{{ include('opening_hours/_form.html.twig') }}
+
+					<a href="{{ path('opening_hours_index') }}">Retour à liste des horaires</a>
+
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

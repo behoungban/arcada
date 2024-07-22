@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Jour d'ouverture
+{% endblock %}
+
+{% block body %}
+
+	<main class="container blockbody">
+		<section class="row">
+			<div class="col-12">
+				<div class="titlePage">
+					<h1 class="text-uppercase">Jours d'ouverture</h1>
+
+					<table class="table">
+						<tbody>
+							<tr>
+								<th>Id</th>
+								<td>{{ opening_hour.id }}</td>
+							</tr>
+							<tr>
+								<th>Jour</th>
+								<td>{{ opening_hour.day }}</td>
+							</tr>
+							<tr>
+								<th>Horaire d'ouverture</th>
+								<td>{{  }}</td>
+							</tr>
+							<tr>
+								<th>Horaire de fermeture</th>
+								<td>{{  }}</td>
+							</tr>
+						</tbody>
+					</table>
+
+					<a href="{{ path('app_opening_hours_index') }}">Retour à la liste</a>
+
+					<a href="{{ path('app_opening_hours_edit', {'id': opening_hour.id}) }}">Modifier</a>
+
+					{{ include('opening_hours/_delete_form.html.twig') }}
+
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

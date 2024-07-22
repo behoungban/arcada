@@ -3,7 +3,6 @@
 namespace App\Controller;
 
 use App\Entity\Avis;
-use App\Form\AvisType;
 use App\Repository\AvisRepository;
 use Doctrine\ORM\EntityManagerInterface;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\IsGranted;
@@ -20,10 +19,34 @@ class AvisController extends AbstractController
     public function validate(Request $request, Avis $avi, EntityManagerInterface $entityManager): Response
     {
         if ($this->isCsrfTokenValid('validate' . $avi->getId(), $request->request->get('_token'))) {
-            $avi->setValidated(true);
+            $avi->setIsApproved(true);
             $entityManager->flush();
         }
 
-        return $this->redirectToRoute('avis_index');
+        return $this->redirectToRoute('employee_manage_reviews');
+    }
+
+    #[Route('/{id}/invalidate', name: 'avis_invalidate', methods: ['POST'])]
+    #[IsGranted('ROLE_EMPLOYEE')]
+    public function invalidate(Request $request, Avis $avi, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('invalidate' . $avi->getId(), $request->request->get('_token'))) {
+            $avi->setIsApproved(false);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('employee_manage_reviews');
+    }
+
+    #[Route('/{id}/delete', name: 'avis_delete', methods: ['POST'])]
+    #[IsGranted('ROLE_EMPLOYEE')]
+    public function delete(Request $request, Avis $avi, EntityManagerInterface $entityManager): Response
+    {
+        if ($this->isCsrfTokenValid('delete' . $avi->getId(), $request->request->get('_token'))) {
+            $entityManager->remove($avi);
+            $entityManager->flush();
+        }
+
+        return $this->redirectToRoute('employee_manage_reviews');
     }
 }

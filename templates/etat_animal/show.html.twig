@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EtatAnimal{% endblock %}
+
+{% block body %}
+    <h1>EtatAnimal</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ etat_animal.id }}</td>
+            </tr>
+            <tr>
+                <th>Etat</th>
+                <td>{{ etat_animal.etat }}</td>
+            </tr>
+            <tr>
+                <th>Nourriture</th>
+                <td>{{ etat_animal.nourriture }}</td>
+            </tr>
+            <tr>
+                <th>Grammage</th>
+                <td>{{ etat_animal.grammage }}</td>
+            </tr>
+            <tr>
+                <th>DatePassage</th>
+                <td>{{ etat_animal.datePassage ? etat_animal.datePassage|date('Y-m-d H:i:s') : '' }}</td>
+            </tr>
+            <tr>
+                <th>DetailEtat</th>
+                <td>{{ etat_animal.detailEtat }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etat_animal_index') }}">back to list</a>
+
+    <a href="{{ path('app_etat_animal_edit', {'id': etat_animal.id}) }}">edit</a>
+
+    {{ include('etat_animal/_delete_form.html.twig') }}
+{% endblock %}

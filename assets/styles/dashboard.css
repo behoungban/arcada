@@ -1,0 +1,8 @@
+.btn-group {
+    display: flex;
+    gap: 10px;
+}
+
+.btn-group form {
+    margin: 0;
+}

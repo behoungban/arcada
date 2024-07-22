@@ -1,0 +1,28 @@
+{% extends 'admin/base.html.twig' %}
+
+{% block title %}Détails de l'utilisateur{% endblock %}
+
+{% block body %}
+    <h1>Détails de l'utilisateur</h1>
+
+    <table class="table">
+        <tr>
+            <th>Email</th>
+            <td>{{ user.email }}</td>
+        </tr>
+        <tr>
+            <th>Prénom</th>
+            <td>{{ user.firstname }}</td>
+        </tr>
+        <tr>
+            <th>Nom de famille</th>
+            <td>{{ user.lastname }}</td>
+        </tr>
+        <tr>
+            <th>Rôles</th>
+            <td>{{ user.roles|join(', ') }}</td>
+        </tr>
+    </table>
+
+    <a href="{{ path('admin_manage_users') }}" class="btn btn-secondary">Retour à la liste des utilisateurs</a>
+{% endblock %}

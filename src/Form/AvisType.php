@@ -14,7 +14,6 @@ class AvisType extends AbstractType
         $builder
             ->add('username')
             ->add('content')
-            ->add('isApproved')
         ;
     }
 

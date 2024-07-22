@@ -1,0 +1,24 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}MODIFIER LES INFORMATIONS
+{% endblock %}
+
+{% block body %}
+
+	<main class="container blockbody">
+		<section class="row">
+			<div class="col-12">
+				<div class="titlePage">
+					<h1 class="text-uppercase">MODIFIER LES HORAIRES D'OUVERTURES </h1>
+
+					{{ include('opening_hours/_form.html.twig', {'button_label': 'Update'}) }}
+
+					<a href="{{ path('opening_hours_index') }}">Retour à liste</a>
+
+					
+
+				</div>
+			</div>
+		</section>
+	</main>
+{% endblock %}

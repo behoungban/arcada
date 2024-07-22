@@ -1,0 +1,34 @@
+{% extends 'employee/base.html.twig' %}
+
+{% block title %}Gérer les Avis{% endblock %}
+
+{% block body %}
+    <h1>Gérer les Avis</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Contenu</th>
+                <th>Validé</th>
+                <th>Actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for avis in avis %}
+            <tr>
+                <td>{{ avis.id }}</td>
+                <td>{{ avis.content }}</td>
+                <td>{{ avis.isApproved ? 'Oui' : 'Non' }}</td>
+                <td>
+                    <a href="{{ path('employee_avis_edit', {'id': avis.id}) }}" class="btn btn-warning">Modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="4">Aucun avis trouvé</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+{% endblock %}

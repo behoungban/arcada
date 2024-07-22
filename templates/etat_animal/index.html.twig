@@ -1,0 +1,43 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}EtatAnimal index{% endblock %}
+
+{% block body %}
+    <h1>EtatAnimal index</h1>
+
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Etat</th>
+                <th>Nourriture</th>
+                <th>Grammage</th>
+                <th>DatePassage</th>
+                <th>DetailEtat</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for etat_animal in etat_animals %}
+            <tr>
+                <td>{{ etat_animal.id }}</td>
+                <td>{{ etat_animal.etat }}</td>
+                <td>{{ etat_animal.nourriture }}</td>
+                <td>{{ etat_animal.grammage }}</td>
+                <td>{{ etat_animal.datePassage ? etat_animal.datePassage|date('Y-m-d H:i:s') : '' }}</td>
+                <td>{{ etat_animal.detailEtat }}</td>
+                <td>
+                    <a href="{{ path('app_etat_animal_show', {'id': etat_animal.id}) }}">show</a>
+                    <a href="{{ path('app_etat_animal_edit', {'id': etat_animal.id}) }}">edit</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_etat_animal_new') }}">Create new</a>
+{% endblock %}

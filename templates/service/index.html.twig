@@ -1,3 +1,4 @@
+{# templates/service/index.html.twig #}
 {% extends 'base.html.twig' %}
 
 {% block title %}Service index{% endblock %}
@@ -11,7 +12,7 @@
                 <th>Id</th>
                 <th>Name</th>
                 <th>Description</th>
-                <th>actions</th>
+                <th>Image</th>
             </tr>
         </thead>
         <tbody>
@@ -20,18 +21,13 @@
                 <td>{{ service.id }}</td>
                 <td>{{ service.name }}</td>
                 <td>{{ service.description }}</td>
-                <td>
-                    <a href="{{ path('service_show', {'id': service.id}) }}">show</a>
-                    <a href="{{ path('service_edit', {'id': service.id}) }}">edit</a>
-                </td>
+                <td><img src="{{ asset('uploads/' ~ service.imageUrl) }}" alt="{{ service.name }}" width="100"></td>
             </tr>
         {% else %}
             <tr>
-                <td colspan="4">no records found</td>
+                <td colspan="4">No records found</td>
             </tr>
         {% endfor %}
         </tbody>
     </table>
-
-    <a href="{{ path('service_new') }}">Create new</a>
 {% endblock %}

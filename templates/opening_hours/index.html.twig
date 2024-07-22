@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Liste des jours d'ouverture{% endblock %}
+
+{% block body %}
+<main class="container blockbody">
+    <section class="row">
+        <div class="col-12">
+            <div class="titlePage">
+                <h1 class="text-uppercase">Liste des jours d'ouverture</h1>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th>Jour</th>
+                            <th>Horaires d'ouverture</th>
+                            <th>Horaires de fermeture</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for opening_hour in opening_hours %}
+                            <tr>
+                                <th scope="row">Lundi</th>
+                                <td>{{ opening_hour.openingMonday ? opening_hour.openingMonday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingMonday ? opening_hour.closingMonday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Mardi</th>
+                                <td>{{ opening_hour.openingTuesday ? opening_hour.openingTuesday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingTuesday ? opening_hour.closingTuesday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Mercredi</th>
+                                <td>{{ opening_hour.openingWednesday ? opening_hour.openingWednesday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingWednesday ? opening_hour.closingWednesday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Jeudi</th>
+                                <td>{{ opening_hour.openingThursday ? opening_hour.openingThursday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingThursday ? opening_hour.closingThursday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Vendredi</th>
+                                <td>{{ opening_hour.openingFriday ? opening_hour.openingFriday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingFriday ? opening_hour.closingFriday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Samedi</th>
+                                <td>{{ opening_hour.openingSaturday ? opening_hour.openingSaturday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingSaturday ? opening_hour.closingSaturday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                            <tr>
+                                <th scope="row">Dimanche</th>
+                                <td>{{ opening_hour.openingSunday ? opening_hour.openingSunday|date('H:i') : 'Fermé' }}</td>
+                                <td>{{ opening_hour.closingSunday ? opening_hour.closingSunday|date('H:i') : 'Fermé' }}</td>
+                            </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </section>
+</main>
+{% endblock %}

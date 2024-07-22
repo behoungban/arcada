@@ -1,37 +1,27 @@
 {% extends 'base.html.twig' %}
 
-{% block title %}Habitat index{% endblock %}
+{% block title %}Habitats{% endblock %}
 
 {% block body %}
-    <h1>Habitat index</h1>
-
-    <table class="table">
-        <thead>
-            <tr>
-                <th>Id</th>
-                <th>Name</th>
-                <th>Description</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
+    <h1>Habitats</h1>
+    <div class="row">
         {% for habitat in habitats %}
-            <tr>
-                <td>{{ habitat.id }}</td>
-                <td>{{ habitat.name }}</td>
-                <td>{{ habitat.description }}</td>
-                <td>
-                    <a href="{{ path('habitat_show', {'id': habitat.id}) }}">show</a>
-                    <a href="{{ path('habitat_edit', {'id': habitat.id}) }}">edit</a>
-                </td>
-            </tr>
-        {% else %}
-            <tr>
-                <td colspan="4">No records found</td>
-            </tr>
+            <div class="col-md-4">
+                <div class="card mb-4 shadow-sm">
+                    <img src="{{ asset('uploads/' ~ habitat.imageUrl) }}" alt="{{ habitat.name }}" class="card-img-top">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ habitat.name }}</h5>
+                        <p>{{ habitat.description }}</p>
+                        <h6>Animals:</h6>
+                        <ul>
+                            {% for animal in habitat.animals %}
+                                <li>{{ animal.name }} ({{ animal.species }})</li>
+                            {% endfor %}
+                        </ul>
+                        <a href="{{ path('habitat_show', {'id': habitat.id}) }}" class="btn btn-primary">View Details</a>
+                    </div>
+                </div>
+            </div>
         {% endfor %}
-        </tbody>
-    </table>
-
-    <a href="{{ path('habitat_new') }}">Create new</a>
+    </div>
 {% endblock %}
